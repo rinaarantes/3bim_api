@@ -6,3 +6,16 @@ __pycache__/
 *.pyc 
 #arquivos de ambientes 
 .env
+                                  
+
+#                                   Conexão bd
+# terminal cmd                   | 1 Criar o banco
+#requirements --> biblioteca     | 2 instalar biblioteca
+#1 criar a maq virtual           | CTRL c pip install fastapi sqlalchemy pymys
+# python -m venv venv            | 3 atualizar o requirements.txt
+# 2 ativar a maq virtual         | pip freeze > requirements.txt
+# .\venv\Scripts\activate        |4
+# 4 reinstalar a biblioteca 
+# pip install -r requirements.txt 
+# 5 rodar servidor
+# uvicorn main:app --redoad
