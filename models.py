@@ -1,4 +1,4 @@
-# models.py criar tabeals e salvar?
+# models.py criar tabeals e salva?
 from sqlalchemy import Column, Integer, String, Float 
 from database import Base 
   

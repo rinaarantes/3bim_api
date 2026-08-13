@@ -1,9 +1,23 @@
 # main.py 
+
 from fastapi import FastAPI, Depends 
 from sqlalchemy.orm import Session 
 from database import Base, engine, get_db 
 from models import ProdutoDB 
 from schemas import ProdutoCreate, ProdutoResponse 
+from fastapi import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+#falta um textin aq pra funcionar esse app
+
+app.add_middleware(
+ CORSMiddleware,
+ allow_origins=['*'],
+ # em produção, restringir para o domínio real do front-end
+ allow_methods=['*'],
+ allow_headers=['*'],
+)
+
   
 Base.metadata.create_all(bind=engine)  # cria as tabelas, se ainda não existirem 
   
@@ -20,3 +34,18 @@ def criar_produto(produto: ProdutoCreate, db: Session = Depends(get_db)):
  db.commit() 
  db.refresh(novo_produto) 
  return novo_produto  
+
+ @app.get('/produtos/{produto_id}', response_model=ProdutoResponse)
+def obter_produto(produto_id: int, db: Session = Depends(get_db)):
+ produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
+ if produto is None:
+   raise HTTPException(status_code=404, detail='Produto não encontrado')
+  return produto
+
+  @app.delete('/produtos/{produto_id}', status_code=204)
+def remover_produto(produto_id: int, db: Session = Depends(get_db)):
+ produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
+ if produto is None:
+   raise HTTPException(status_code=404, detail='Produto não encontrado')
+ db.delete(produto)
+ db.commit()
