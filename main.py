@@ -10,6 +10,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 #falta um textin aq pra funcionar esse app
 
+
+
+  
+Base.metadata.create_all(bind=engine)  # cria as tabelas, se ainda não existirem 
+  
+app = FastAPI() 
+
 app.add_middleware(
  CORSMiddleware,
  allow_origins=['*'],
@@ -17,11 +24,6 @@ app.add_middleware(
  allow_methods=['*'],
  allow_headers=['*'],
 )
-
-  
-Base.metadata.create_all(bind=engine)  # cria as tabelas, se ainda não existirem 
-  
-app = FastAPI() 
   
 @app.get('/produtos', response_model=list[ProdutoResponse]) 
 def listar_produtos(db: Session = Depends(get_db)): 
@@ -29,23 +31,38 @@ def listar_produtos(db: Session = Depends(get_db)):
   
 @app.post('/produtos', response_model=ProdutoResponse, status_code=201) 
 def criar_produto(produto: ProdutoCreate, db: Session = Depends(get_db)): 
- novo_produto = ProdutoDB(**produto.dict()) 
- db.add(novo_produto) 
- db.commit() 
- db.refresh(novo_produto) 
- return novo_produto  
+  novo_produto = ProdutoDB(**produto.dict()) 
+  db.add(novo_produto) 
+  db.commit() 
+  db.refresh(novo_produto) 
+  return novo_produto  
 
- @app.get('/produtos/{produto_id}', response_model=ProdutoResponse)
+@app.get('/produtos/{produto_id}', response_model=ProdutoResponse)
 def obter_produto(produto_id: int, db: Session = Depends(get_db)):
- produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
- if produto is None:
-   raise HTTPException(status_code=404, detail='Produto não encontrado')
+  produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
+  if produto is None:
+    raise HTTPException(status_code=404, detail='Produto não encontrado')
   return produto
 
-  @app.delete('/produtos/{produto_id}', status_code=204)
+@app.delete('/produtos/{produto_id}', status_code=204)
 def remover_produto(produto_id: int, db: Session = Depends(get_db)):
- produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
+  produto = db.query(ProdutoDB).filter(ProdutoDB.id == produto_id).first()
+  if produto is None:
+    raise HTTPException(status_code=404, detail='Produto não encontrado')
+  db.delete(produto)
+  db.commit()
+
+  
+@app.put('/produtos/{produto_id}', response_model=ProdutoResponse)
+def atualizar_produto(produto_id: int, dados: ProdutoCreate, db:
+Session = Depends(get_db)):
+ produto = db.query(ProdutoDB).filter(ProdutoDB.id ==
+produto_id).first()
  if produto is None:
    raise HTTPException(status_code=404, detail='Produto não encontrado')
- db.delete(produto)
+ produto.nome = dados.nome
+ produto.preco = dados.preco
+ produto.quantidade = dados.quantidade
  db.commit()
+ db.refresh(produto)
+ return produt
