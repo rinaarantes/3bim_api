@@ -57,7 +57,7 @@ def remover_produto(produto_id: int, db: Session = Depends(get_db)):
 def atualizar_produto(produto_id: int, dados: ProdutoCreate, db:
 Session = Depends(get_db)):
  produto = db.query(ProdutoDB).filter(ProdutoDB.id ==
-produto_id).first()
+ produto_id).first()
  if produto is None:
    raise HTTPException(status_code=404, detail='Produto não encontrado')
  produto.nome = dados.nome
