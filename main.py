@@ -4,7 +4,9 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session 
 from database import Base, engine, get_db 
 from models import ProdutoDB 
+from models import livroDB 
 from schemas import ProdutoCreate, ProdutoResponse 
+from schemas import livroCreate, livroResponse 
 from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -66,3 +68,8 @@ Session = Depends(get_db)):
  db.commit()
  db.refresh(produto)
  return produt
+
+
+@app.get('/livro', response_model=list[livroResponse]) 
+def listar_livro(db: Session = Depends(get_db)): 
+    return db.query(livroDB).all() 
