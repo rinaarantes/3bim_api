@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06-Ago-2026 às 13:37
+-- Tempo de geração: 20-Ago-2026 às 13:44
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.2
 
@@ -20,8 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `loja`
 --
-CREATE DATABASE IF NOT EXISTS `loja` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `loja`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `livros`
+--
+
+CREATE TABLE `livros` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  `autor` varchar(100) NOT NULL,
+  `ano_publicacao` int(11) NOT NULL,
+  `preco` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `livros`
+--
+
+INSERT INTO `livros` (`id`, `titulo`, `autor`, `ano_publicacao`, `preco`) VALUES
+(1, 'Amanhecer na Colheita', 'Suzanne Collins', 2025, 52),
+(2, 'Design Thinking: Inovação em Negócios', 'Maurício Vianna et al.', 2012, 19),
+(3, 'Design Thinking: Inovação em Negócios', 'Maurício Vianna et al.', 2012, 19);
 
 -- --------------------------------------------------------
 
@@ -41,12 +62,19 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `preco`, `quantidade`) VALUES
-(1, 'desktop de mesa', 1562.56, 15),
-(2, 'notebook', 3000, 5);
+(1, 'banner', 45, 1),
+(2, 'energético', 4, 10);
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `livros`
+--
+ALTER TABLE `livros`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ix_livros_id` (`id`);
 
 --
 -- Índices para tabela `produtos`
@@ -58,6 +86,12 @@ ALTER TABLE `produtos`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `livros`
+--
+ALTER TABLE `livros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
