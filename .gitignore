@@ -10,7 +10,7 @@ __pycache__/
 # get - lista
 # post - insert
                                   
-
+# main primeiro rota do get, dps copia e joga la pra baixo? dps alterar as funções, listar filmes e tals. eai se o servidor estiver rodando pare! crtl c e reinicia o servidor. e ver se o phpmyadim apareceu outra tabela
 #                                   Conexão bd
 # terminal cmd                    | 1 Criar o banco (importar no caso)
 #requirements --> biblioteca      | 2 instalar biblioteca
@@ -21,4 +21,4 @@ __pycache__/
 # 4 reinstalar a biblioteca       | http://localhost:8000/docs 
 # pip install -r requirements.txt |
 # 5 rodar servidor
-# uvicorn main:app --redoad
+# uvicorn main:app --reload

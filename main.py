@@ -4,6 +4,7 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session 
 from database import Base, engine, get_db 
 from models import ProdutoDB 
+from models import livroDB 
 from schemas import ProdutoCreate, ProdutoResponse 
 from models import LivroDB
 from schemas import LivroCreate, LivroResponse
@@ -11,6 +12,13 @@ from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 #falta um textin aq pra funcionar esse app
+
+
+
+  
+Base.metadata.create_all(bind=engine)  # cria as tabelas, se ainda não existirem 
+  
+app = FastAPI() 
 
 app.add_middleware(
  CORSMiddleware,
