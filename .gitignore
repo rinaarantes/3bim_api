@@ -7,6 +7,12 @@ __pycache__/
 #arquivos de ambientes 
 .env
 
+# teste unitario
+htmlcov/
+.coverage
+relatorio.html
+resultado.xml
+
 # get - lista
 # post - insert
                                   
@@ -20,5 +26,10 @@ __pycache__/
 # .\venv\Scripts\activate         |4 criar arquivos (q ja estão criados)
 # 4 reinstalar a biblioteca       | http://localhost:8000/docs 
 # pip install -r requirements.txt |
-# 5 rodar servidor
-# uvicorn main:app --reload
+# 5 rodar servidor                | 1 para testar os teste precisa instalar essas bibliotecas -test_produtos.py-
+# uvicorn main:app --reload       | terminal -> cmd (setinha split terminal with profile)
+#                                 | venv\Scripts\activate
+#                                 | pip install pytest
+#                                 | 2 atualizar as bibliotecas 
+#                                 | pip freeze > requirements.txt
+#                                 | 
